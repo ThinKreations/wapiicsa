@@ -3,7 +3,8 @@ import Header from "@/components/Header";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import styles from "@/styles/Class.module.css"
-import { Scanner } from "@yudiel/react-qr-scanner";
+import { createWorker } from 'tesseract.js';
+
 
 export default function Clase(){
     const router = useRouter()
@@ -46,10 +47,7 @@ export default function Clase(){
                 </div>
                 <div className={styles.class_scanner_container}>
                     <div className={styles.class_scanner_div}>
-                        <Scanner allowMultiple={true} onScan={async(res)=>{
-                            alert(res)
-}
-                        }/>
+                        
                     </div>
                 </div>
             </div>

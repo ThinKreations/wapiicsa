@@ -1,192 +1,207 @@
 
 
 
-/* index */
+  /* index */
 
-.container{
-  background-color: var(--background);
-  background-image: linear-gradient(90deg, rgba(200, 200, 200, 0.6) 0%, rgba(230,230,230,1) 90%), url('../src/bg.jpg');
-  background-size: contain;
-  background-repeat: repeat;
-  color: var(--foreground);
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: Geist, Montserrat, Arial, Helvetica, sans-serif;
-}
+  @keyframes fondo{
+    0% {
+      background-position: 
+        0 0,
+        0 0;
+    }
+    100% {
+      background-position:
+        0 0,
+        800px 800px;
+    }
+  }
 
-.logo{
-  width: 60%;
-  height: 60%;
-}
-
-.landing_block, .auth_block{
-  word-wrap: break-word;
-  text-wrap-style: pretty;
-  align-items: center;
-}
-.auth_block{
-  margin: 30px;
-  width: 20vw;
-  height: 70vh;
-  align-items: center;
-  padding: 3vw;
-  border-left: 1px solid var(--input-border);
-}
-.landing_block h1{
-  margin: 25px 0;
-}
-.landing_block p{
-  margin: 25px 0;
-}
-.landing_block{
-  width: 30vw;
-  margin-top: none;
-  text-align: center;
-}
-
-/* index - formulario de login */
-
-.login_form{
-    text-align: center;
-}
-
-.login_inputContainer{
-    position: relative;
-    margin: 25px 0;
-    width: 100%;
-}
-.login_input{
-    width: 100%;
-    background-color: transparent;
-    border: none;
-    border-bottom: 2px solid var(--input-border);
-    outline: none;
-    color: var(--foreground);
-    font-family: Geist, Montserrat, Arial, Helvetica, sans-serif;
-}
-.login_inputContainer .login_input:focus ~ .login_label, .login_inputContainer .login_input:valid ~ .login_label{
-  top: -18px;
-  font-size: 14px;
-  color: var(--input-border-hover);
-}
-.login_label{
-  position: absolute;
-  top: 0;
-  left: 0;
-  color: var(--input-border);
-  transition: all 0.2s ease;
-  pointer-events: none;
-}
-.login_inputContainer .login_input:focus ~ .login_label, .login_inputContainer .login_input:valid ~ .login_label{
-  top: -18px;
-  font-size: 14px;
-  color: var(--input-border-hover);
-}
-
-.underline{
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 2px;
-  width: 100%;
-  background-color: var(--input-border-hover);
-  transform: scaleX(0);
-  transition: all 0.2s ease;
-}
-.login_inputContainer .login_input:focus ~ .underline, .login_inputContainer .login_input:valid ~ .underline{
-  transform: scaleX(1);
-}
-
-.login_checkbox{
-    margin-bottom: 15px;
-}
-.login_checkbox input{
-    margin: 10px;
-    filter: opacity(50%);
-}
-
-.login_button{
-    background-color: transparent;
-    padding: 10px;
-    font-family: Geist, Montserrat, Arial, Helvetica, sans-serif;
-    border:3px dotted var(--input-border);
-    outline: none;
-    width: 100%;
-}
-.login_button:hover{
-    border:3px solid var(--input-border);
-    color: var(--input-border-hover);
-}
-
-.login_link_recover{
-  font-size: 13px;
-  color: var(--input-border);
-  position: relative;
-  bottom:35;
-  left: 20;
-}
-.login_link_recover:hover{
-  color: var(--input-border-hover);
-}
-
-.login_btn_options{
-  background-color: transparent;
-  padding: 4px;
-  font-size: 14px;
-  border: none;
-  font-family: Geist, Montserrat, Arial, Helvetica, sans-serif;
-  color: var(--input-border-hover);
-}
-.login_btn_options:hover{
-  text-decoration: underline;
-}
-
-.login_showpass, .login_showpass2{
-  border: none;
-  outline: none;
-  background-color: transparent;
-  position: relative;
-  left: 182;
-  bottom: 48;
-  color: var(--input-border);
-}
-.login_showpass:hover{
-  color: var(--input-border-hover);
-}
-.login_showpass2{ /* xd */
-  position: relative;
-  left: 120;
-}
-.login_showpass2:hover{
-  color: var(--input-border-hover);
-}
-
-@media (max-width: 600px) {
   .container{
-    background-color: black;
+    background-image: linear-gradient(90deg, rgba(200, 200, 200, 0.6) 0%, rgba(230,230,230,0.95) 60%), url('../src/bg.png');
+    background-attachment: fixed, scroll;
+    background-size: 100% 100%, 5%;
+    background-repeat: repeat;
+    background-position: center;
+    animation: fondo 60s linear infinite;
+    color: var(--foreground);
+    width: 100vw;
+    height: 100vh;
     display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Geist, Montserrat, Arial, Helvetica, sans-serif;
+  }
+
+  .logo{
+    width: 60%;
+    height: 60%;
+  }
+
+  .landing_block, .auth_block{
+    word-wrap: break-word;
+    text-wrap-style: pretty;
     align-items: center;
   }
-  .logo{
-    width: 85%;
-    height: 45%;
+  .auth_block{
+    margin: 30px;
+    width: 20vw;
+    height: 70vh;
+    align-items: center;
+    padding: 3vw;
+    border-left: 1px solid var(--input-border);
+  }
+  .landing_block h1{
+    margin: 25px 0;
+  }
+  .landing_block p{
+    margin: 25px 0;
   }
   .landing_block{
+    width: 30vw;
+    margin-top: none;
+    text-align: center;
+  }
+
+  /* index - formulario de login */
+
+  .login_form{
+      text-align: center;
+  }
+
+  .login_inputContainer{
+      position: relative;
+      margin: 25px 0;
+      width: 100%;
+  }
+  .login_input{
+      width: 100%;
+      background-color: transparent;
+      border: none;
+      border-bottom: 2px solid var(--input-border);
+      outline: none;
+      color: var(--foreground);
+      font-family: Geist, Montserrat, Arial, Helvetica, sans-serif;
+  }
+  .login_inputContainer .login_input:focus ~ .login_label, .login_inputContainer .login_input:valid ~ .login_label{
+    top: -18px;
+    font-size: 14px;
+    color: var(--input-border-hover);
+  }
+  .login_label{
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: var(--input-border);
+    transition: all 0.2s ease;
+    pointer-events: none;
+  }
+  .login_inputContainer .login_input:focus ~ .login_label, .login_inputContainer .login_input:valid ~ .login_label{
+    top: -18px;
+    font-size: 14px;
+    color: var(--input-border-hover);
+  }
+
+  .underline{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
     width: 100%;
-    margin: 0px;
-    margin-top: 25px;
-    padding: 0px;
+    background-color: var(--input-border-hover);
+    transform: scaleX(0);
+    transition: all 0.2s ease;
   }
-  .auth_block{
-    width: 47%;
-    margin: 0px;
-    margin-top: 5vh;
+  .login_inputContainer .login_input:focus ~ .underline, .login_inputContainer .login_input:valid ~ .underline{
+    transform: scaleX(1);
+  }
+
+  .login_checkbox{
+      margin-bottom: 15px;
+  }
+  .login_checkbox input{
+      margin: 10px;
+      filter: opacity(50%);
+  }
+
+  .login_button{
+      background-color: transparent;
+      padding: 10px;
+      font-family: Geist, Montserrat, Arial, Helvetica, sans-serif;
+      border:3px dotted var(--input-border);
+      outline: none;
+      width: 100%;
+  }
+  .login_button:hover{
+      border:3px solid var(--input-border);
+      color: var(--input-border-hover);
+  }
+
+  .login_link_recover{
+    font-size: 13px;
+    color: var(--input-border);
+    position: relative;
+    bottom:35;
+    left: 20;
+  }
+  .login_link_recover:hover{
+    color: var(--input-border-hover);
+  }
+
+  .login_btn_options{
+    background-color: transparent;
+    padding: 4px;
+    font-size: 14px;
     border: none;
-    padding: 0px;
+    font-family: Geist, Montserrat, Arial, Helvetica, sans-serif;
+    color: var(--input-border-hover);
   }
-}
+  .login_btn_options:hover{
+    text-decoration: underline;
+  }
+
+  .login_showpass, .login_showpass2{
+    border: none;
+    outline: none;
+    background-color: transparent;
+    position: relative;
+    left: 182;
+    bottom: 48;
+    color: var(--input-border);
+  }
+  .login_showpass:hover{
+    color: var(--input-border-hover);
+  }
+  .login_showpass2{ /* xd */
+    position: relative;
+    left: 120;
+  }
+  .login_showpass2:hover{
+    color: var(--input-border-hover);
+  }
+
+  @media (max-width: 600px) {
+    .container{
+      background-color: black;
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: column;
+      align-items: center;
+    }
+    .logo{
+      width: 85%;
+      height: 45%;
+    }
+    .landing_block{
+      width: 100%;
+      margin: 0px;
+      margin-top: 25px;
+      padding: 0px;
+    }
+    .auth_block{
+      width: 47%;
+      margin: 0px;
+      margin-top: 5vh;
+      border: none;
+      padding: 0px;
+    }
+  }
