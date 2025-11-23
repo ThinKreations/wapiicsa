@@ -58,7 +58,7 @@ export default function Home(){
               <Link href={'/sesion/recuperar'} className={styles.login_link_recover}>Olvidé mi contraseña</Link>
               <div className={styles.login_checkbox}><input type="checkbox" name="recordar"/><label>Recuerdame</label></div>
               
-              <button className={styles.login_button} onClick={()=>{router.push('/dashboard')}}><font size="5">A c c e d e r</font></button>
+              <button className={styles.login_button} onClick={()=>{router.push('/clases')}}><font size="5">A c c e d e r</font></button>
 
               <br/><br/>
               <button className={styles.login_btn_options} onClick={toSignUp}>Registrate aquí</button>

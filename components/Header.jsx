@@ -9,7 +9,7 @@ export default function Header(){
     return(
         <div className={styles.header}>
             <center>
-                <Link href={'/dashboard/'}><Image src={logo} width={180} style={{filter: "invert()"}} className={styles.logo} alt="Logo de WAPA"/></Link>
+                <Link href={'/clases'}><Image src={logo} width={180} style={{filter: "invert()"}} className={styles.logo} alt="Logo de WAPA"/></Link>
             </center>
             <div key="user" className={styles.header_controls}>
                     <select className={styles.header_select} defaultValue={0}>
@@ -17,7 +17,7 @@ export default function Header(){
                         <option >Secuencia 1</option>
                     </select>
                 <div>
-                    <button className={`material-icons`} onClick={()=>{router.push('/dashboard')}}>
+                    <button className={`material-icons`} onClick={()=>{router.push('/clases/')}}>
                         home
                     </button>
                     <button className={`material-icons`}>

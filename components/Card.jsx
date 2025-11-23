@@ -5,7 +5,7 @@ export default function Card(){
     const router = useRouter()
     return(
         <>
-            <div className={styles.dash_card} onClick={()=>{router.push('/dashboard/clases/0')}}>
+            <div className={styles.dash_card} onClick={()=>{router.push('/clases/0')}}>
                 <h2>Unidad de Aprendizaje</h2>
                 <div style={{display:"flex", flexWrap:"wrap", justifyContent:"space-between"}}>
                     <h3>5CM51</h3>

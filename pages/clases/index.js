@@ -59,7 +59,7 @@ export default function Dashboard(/*{data}*/){
                 </tr>
               </thead>
               <tbody>
-                <tr className={styles.dash_table_class} onClick={()=>{router.push('/dashboard/clases/0')}}>
+                <tr className={styles.dash_table_class} onClick={()=>{router.push('/clases/0')}}>
                   <td className={styles.dash_table_class_name} style={{textAlign:"left"}}><p style={{borderRight:"1px solid var(--input-border)"}}>Unidad de Aprendizaje</p></td>
                   <td style={{width:"25%"}}><p style={{borderRight:"1px solid var(--input-border)"}}>5CM51</p></td>
                   <td style={{width:"20%"}}><p>2026-1</p></td>
