@@ -19,7 +19,7 @@
     justify-content: space-around;
     flex-wrap: wrap;
     align-items: center;
-    min-width: max-content;
+    min-width: 380px;
 }
 .header_controls button{
     background-color: transparent;
@@ -33,7 +33,7 @@
     margin: 5px;
 }
 .header_controls button:hover{
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(255,255,255,0.2);
 }
 
 .header_select{
@@ -57,12 +57,34 @@
     
 }
 
+/* DB Card */
+
+.dash_card{
+    background-color: var(--background);
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid var(--input-border);
+    border-radius: 5px;
+}
+.dash_card:hover{
+    cursor: pointer;
+    background-color: rgba(255,255,255,0.5);
+}
+
 @media (max-width: 600px){
+    .logo{
+        width: 40%;
+        height: 40%;
+    }
     .header{
         flex-direction: column;
     }
     .header_controls{
         width: fit-content;
-        flex-direction: column;
+        flex-direction: column-reverse;
+    }
+    .header_select{
+        min-width: fit-content;
+        width: fit-content;
     }
 }

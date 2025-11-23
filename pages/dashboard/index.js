@@ -6,14 +6,13 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import { useRouter } from "next/router";
-
+import Card from "@/components/Card";
 export default function Dashboard(/*{data}*/){
   const router = useRouter();
 
-  const [view, setView] = useState(1);
+  const [view, setView] = useState(0);
 
   const changeView = (value) => {
-    //state 0 = tablero, state 1 = lista
     setView(value)
   }
 
@@ -24,29 +23,31 @@ export default function Dashboard(/*{data}*/){
       <div className={styles.dash_container}>
         <div className={styles.dash_ctrl}>
           <div>
+            {/*
             <form className={styles.dash_ctrl_srch}>
               <input className={styles.dash_ctrl_srch_input} placeholder="Buscar clase o secuencia"/>
               <button className={`${styles.dash_ctrl_srch_btn} material-icons`} type="button">search</button>
             </form>
+            */}
           </div>
           <div className={styles.dash_ctrl_view}>
-            <span>Mostrar:</span>
-            <button className={`${styles.dash_ctrl_view_btn} material-icons`} onClick={()=>changeView(0)}>dashboard</button>
-            <button className={`${styles.dash_ctrl_view_btn} material-icons`} onClick={()=>changeView(1)}>view_list</button>
+            <span style={{color:"var(--input-border)"}}>Mostrar:</span>
+            <button 
+              className={`${styles.dash_ctrl_view_btn} material-icons`}
+              style={view === 0 ? {color:'black'} : {}}
+              onClick={()=>changeView(0)}>dashboard
+            </button>
+            <button 
+              className={`${styles.dash_ctrl_view_btn} material-icons`} 
+              style={view === 1 ? {color:'black'} : {}}
+              onClick={()=>changeView(1)}>view_list</button>
             <button className={styles.btn_agregar}>+ Agregar</button>
           </div>
         </div>
-        <div className={styles.dash_card_container}>
         {view==0?(
-          <>
-            <div className={styles.dash_card}>
-                <h2>Unidad de Aprendizaje</h2>
-                <div style={{display:"flex", flexWrap:"wrap", justifyContent:"space-between"}}>
-                  <h3>5CM51</h3>
-                  <h3>2026-1</h3>
-                </div>
-            </div>
-          </>
+          <div className={styles.dash_card_container}>
+            <Card  />
+          </div>
         ):(
           <div className={styles.dash_table_container}>
             <table className={styles.dash_table}>
@@ -67,7 +68,6 @@ export default function Dashboard(/*{data}*/){
             </table>
           </div>
         )}
-        </div>
       </div>
     </>
   );

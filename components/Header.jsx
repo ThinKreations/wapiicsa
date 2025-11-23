@@ -8,13 +8,18 @@ export default function Header(){
     const router = useRouter();
     return(
         <div className={styles.header}>
-            <Link href={'/dashboard/'}><Image src={logo} width={180} style={{filter: "invert()"}} alt="Logo de WAPA"/></Link>
+            <center>
+                <Link href={'/dashboard/'}><Image src={logo} width={180} style={{filter: "invert()"}} className={styles.logo} alt="Logo de WAPA"/></Link>
+            </center>
             <div key="user" className={styles.header_controls}>
-                <select className={styles.header_select} defaultValue={0}>
-                    <option value={0} disabled>Seleccionar secuencia</option>
-                    <option >Secuencia 1</option>
-                </select>
+                    <select className={styles.header_select} defaultValue={0}>
+                        <option value={0} disabled>Secuencia</option>
+                        <option >Secuencia 1</option>
+                    </select>
                 <div>
+                    <button className={`material-icons`} onClick={()=>{router.push('/dashboard')}}>
+                        home
+                    </button>
                     <button className={`material-icons`}>
                         settings
                     </button>

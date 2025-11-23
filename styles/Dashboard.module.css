@@ -75,22 +75,18 @@
 }
 
 .dash_card_container{
-  border: 1px solid transparent;
+  border: 1px solid rgba(120,120,120,0.4);
+  border-radius: 7px;
   margin-top: 20px;
   width: 85vw;
+  background-color: rgba(140,140,140,0.1);
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.dash_card{
-  background-color: rgba(255,255,255,0.5);
-  margin: 20px;
-  padding: 10px;
-  border: 1px solid var(--input-border);
-  border-radius: 7px;
-}
 .dash_table_container{
+  margin-top: 20px;
   border: 1px solid var(--input-border);
   border-radius: 7px;
 }
@@ -135,7 +131,7 @@
 @media (max-width: 600px) {
   .dash_ctrl{
     justify-content: center;
-    padding-top: 75px;
+    padding-top: 60px;
     flex-wrap: wrap;
   }
   .dash_ctrl_srch{
@@ -152,4 +148,5 @@
   .dash_table td{
     font-size: 15px;
   }
+  
 }

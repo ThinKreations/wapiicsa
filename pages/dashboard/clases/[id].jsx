@@ -1,5 +1,5 @@
 import MainHead from "@/components/MainHead";
-//import { getServerSideProps } from "next/dist/build/templates/pages";
+import Header from "@/components/Header";
 import { useRouter } from "next/router";
 
 export default function Clase(){
@@ -8,6 +8,7 @@ export default function Clase(){
     return(
         <>
             <MainHead title={id}/>
+            <Header/>
         </>
     )
     
