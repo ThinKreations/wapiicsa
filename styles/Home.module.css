@@ -182,6 +182,7 @@
   @media (max-width: 600px) {
     .container{
       background-color: black;
+      background-size: 100% 100%, 20%;
       display: flex;
       justify-content: flex-start;
       flex-direction: column;
