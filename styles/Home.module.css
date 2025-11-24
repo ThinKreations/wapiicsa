@@ -12,12 +12,12 @@
     100% {
       background-position:
         0 0,
-        800px 800px;
+        -800px 0px;
     }
   }
 
   .container{
-    background-image: linear-gradient(90deg, rgba(200, 200, 200, 0.6) 0%, rgba(230,230,230,0.95) 60%), url('../src/bg.png');
+    background-image: linear-gradient(90deg, rgba(200, 200, 200, 0.6) 0%, rgba(230,230,230,1) 100%), url('../src/bg.png');
     background-attachment: fixed, scroll;
     background-size: 100% 100%, 5%;
     background-repeat: repeat;
