@@ -17,6 +17,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   let user_profesor = "axel"
 
+
   const changeView = (value) => {
     setView(value);
     localStorage.setItem("view", value)
@@ -25,7 +26,7 @@ export default function Dashboard() {
   const setViewByLocalStorage = () => {
     setView(localStorage.getItem("view"))
   }
-
+  /*
   const getClases = async () => {
     try {
       const res = await fetch(
@@ -39,16 +40,16 @@ export default function Dashboard() {
       setLoading(false);
     }
   };
-
+  */
   useEffect(() => {
     setViewByLocalStorage()
-    getClases()
+    //getClases()
   })
 
   return (
     <>
       <MainHead title="WAPA" />
-      <Header />
+      <Header /*clases={clases}*/ />
       <div className={styles.dash_container}>
         <div className={styles.dash_ctrl}>
           <div>
@@ -84,7 +85,7 @@ export default function Dashboard() {
             </button>
           </div>
         </div>
-        {!loading ?
+        {/*!loading ?
           view == 0 ? (
             <div className={styles.dash_card_container}>
               {clases.map((c) => {
@@ -161,12 +162,12 @@ export default function Dashboard() {
               <br /><font color="gray">Cargando...</font>
             </div>
           )
-        }
+        */}
       </div>
     </>
   );
 }
-
+/*
 export async function getServerSideProps(context) {
   const cookies = context.req.headers.cookie || "";
   const cookieMap = Object.fromEntries(
@@ -174,7 +175,7 @@ export async function getServerSideProps(context) {
   );
 
   const user_profesor = cookieMap.user_profesor;
-
+  
   if (!user_profesor) {
     return {
       redirect: {
@@ -183,17 +184,21 @@ export async function getServerSideProps(context) {
       },
     };
   }
-
-  const res = await fetch("http://localhost:8000/api/clases", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({
-      user_profesor: user_profesor,
-    }),
-  });
+  
+  try {
+    const res = await fetch("http://localhost:8000/api/clases", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        user_profesor: user_profesor,
+      }),
+    });
+  } catch (err) {
+    console.log(err)
+  }
 
   const data = await res.json();
 
@@ -203,3 +208,4 @@ export async function getServerSideProps(context) {
     },
   };
 }
+ */

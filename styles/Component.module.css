@@ -77,6 +77,61 @@
     color: var(--input-border);
 }
 
+/* Uploader */
+
+.uploader_container{
+    margin-top: 40px;
+    
+    text-align: center;    
+    
+}
+.uploader_input_container{
+    background-image: url('../src/file.png');
+    background-size: 90%;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 300px;
+    height: 300px;
+    border-radius: 7px;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+    border: 1px solid rgba(0,0,0,0.2);
+}
+.uploader_input_container:hover{
+    background-color: rgba(255,255,255,0.5);
+}
+.uploader_input_container input{
+    filter: opacity(0%);
+    width: 300px;
+    height: 300px;
+}
+.u_submit{
+    color: white;
+    border: none;
+    outline: none;
+    padding: 7px;
+    font-size: 20px;
+    margin-top: 20px;
+    margin: 5px;
+    border-radius:4px;
+    background-color: rgb(40,150,40);
+}
+.u_submit:hover{
+    background-color: rgba(40,180,40,0.8);
+}
+
+.u_cancel{
+    color: white;
+    border: none;
+    outline: none;
+    padding: 7px;
+    font-size: 20px;
+    border-radius:4px;
+    background-color: rgb(150, 20, 20);
+}
+.u_cancel:hover{
+    background-color: rgba(180,20,20,0.8);
+}
+
 @media (max-width: 600px){
     .logo{
         width: 40%;

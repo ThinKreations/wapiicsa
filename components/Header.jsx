@@ -4,7 +4,7 @@ import styles from "@/styles/Component.module.css"
 import logo from "@/src/logo.png"
 import { useRouter } from "next/router";
 
-export default function Header() {
+export default function Header(props) {
     const router = useRouter();
     return (
         <div className={styles.header}>
@@ -14,7 +14,8 @@ export default function Header() {
             <div key="user" className={styles.header_controls}>
                 <select className={styles.header_select} defaultValue={0}>
                     <option value={0} disabled>Secuencia</option>
-                    <option >Secuencia 1</option>
+                    <option>
+                    </option>
                 </select>
                 <div>
                     <button className={`material-icons`} onClick={() => { router.push('/clases/') }}>
