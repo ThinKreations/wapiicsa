@@ -60,7 +60,10 @@ export default function Uploader() {
                 <form onSubmit={upload}>
                     <div className={styles.uploader_input_container}>
                         <input accept="application/pdf" type="file" onChange={fileChange} disabled={loading} />
+                        <center><p>Selecciona el ícono, o arrastra tu PDF aquí.</p></center>
+
                     </div>
+                    <br />
                     <button className={styles.u_cancel} type="button" onClick={() => { router.push('/clases/') }}>Cancelar</button>
                     <button className={styles.u_submit} type="submit">{loading ? 'Subiendo...' : 'Subir PDF'}</button>
                 </form>

@@ -26,7 +26,7 @@ export default function Dashboard() {
   const setViewByLocalStorage = () => {
     setView(localStorage.getItem("view"))
   }
-  /*
+
   const getClases = async () => {
     try {
       const res = await fetch(
@@ -40,16 +40,16 @@ export default function Dashboard() {
       setLoading(false);
     }
   };
-  */
+
   useEffect(() => {
-    setViewByLocalStorage()
-    //getClases()
-  })
+    setViewByLocalStorage();
+    getClases();
+  }, []);
 
   return (
     <>
       <MainHead title="WAPA" />
-      <Header /*clases={clases}*/ />
+      <Header user_profesor={user_profesor} />
       <div className={styles.dash_container}>
         <div className={styles.dash_ctrl}>
           <div>
@@ -62,7 +62,6 @@ export default function Dashboard() {
             <h1>Bienvenido</h1>
           </div>
           <div className={styles.dash_ctrl_view}>
-            <span style={{ color: "var(--input-border)" }}>Mostrar:</span>
             <button
               className={`${styles.dash_ctrl_view_btn} material-icons`}
               style={view === 0 ? { color: "black" } : {}}
@@ -85,12 +84,13 @@ export default function Dashboard() {
             </button>
           </div>
         </div>
-        {/*!loading ?
+        {!loading ?
           view == 0 ? (
             <div className={styles.dash_card_container}>
               {clases.map((c) => {
                 return (
                   <Card
+                    key={c.id_clase}
                     id={c.id_clase}
                     materia={c.materia}
                     periodo={c.periodo}
@@ -158,16 +158,16 @@ export default function Dashboard() {
           :
           (
             <div className={styles.loading}>
-              <Image src={load} width={100} />
+              <Image src={load} width={100} alt="Cargando..." />
               <br /><font color="gray">Cargando...</font>
             </div>
           )
-        */}
+        }
       </div>
     </>
   );
 }
-/*
+
 export async function getServerSideProps(context) {
   const cookies = context.req.headers.cookie || "";
   const cookieMap = Object.fromEntries(
@@ -175,7 +175,7 @@ export async function getServerSideProps(context) {
   );
 
   const user_profesor = cookieMap.user_profesor;
-  
+  /*
   if (!user_profesor) {
     return {
       redirect: {
@@ -184,9 +184,11 @@ export async function getServerSideProps(context) {
       },
     };
   }
-  
+  */
+
+  let res;
   try {
-    const res = await fetch("http://localhost:8000/api/clases", {
+    res = await fetch("http://localhost:8000/api/clases", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -196,16 +198,25 @@ export async function getServerSideProps(context) {
         user_profesor: user_profesor,
       }),
     });
-  } catch (err) {
-    console.log(err)
+  } catch (e) {
+    console.log(e)
   }
 
+  if (!res) {
+    return {
+      props: {
+        clases: []
+      }
+    }
+  }
   const data = await res.json();
-
   return {
     props: {
       clases: data,
     },
   };
+
+
+
+
 }
- */

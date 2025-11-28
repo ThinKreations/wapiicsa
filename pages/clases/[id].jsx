@@ -4,28 +4,34 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import styles from "@/styles/Class.module.css"
 import { createWorker } from 'tesseract.js';
+let user_profesor = "axel"
 
 
-export default function Clase(){
+export default function Clase() {
     const router = useRouter()
-    const {id} = router.query;
+    const { id } = router.query;
 
-    useState(()=>{
 
-    })
-
-    return(
+    return (
         <>
-            <MainHead title={id}/>
-            <Header/>
+
+            <MainHead title={id} />
+            <Header user_profesor={user_profesor} />
             <div className={styles.class_maincontainer}>
-                <div className={styles.class_container}>
-                    <form>
-                        <button>+ Invitado</button>
-                        <p><span className="material-icons">person</span>Invitado: {`id`}</p>
-                    </form>
-                    <div>
-                        <table>
+                <div className={styles.class_centered}>
+                    <div className={styles.class_header}>
+                        <div className={styles.guest_info}>
+                            <span className="material-icons">person</span>
+                            <p>Invitado: <strong>{id}</strong></p>
+                        </div>
+                        <button className={styles.add_guest_btn}>
+                            <span className="material-icons">person_add</span>
+                            + Invitado
+                        </button>
+                    </div>
+
+                    <div className={styles.table_wrapper}>
+                        <table className={styles.spaced_table}>
                             <thead>
                                 <tr>
                                     <th>N.L.</th>
@@ -35,30 +41,25 @@ export default function Clase(){
                                 </tr>
                             </thead>
                             <tbody>
+
                                 <tr>
-                                    <td>1</td>
-                                    <td>2024600000</td>
-                                    <td>Juares KKastillo Rubencio Graviel</td>
-                                    {/* Boton o cuadro por fecha */}
+                                    <td className={styles.number}>1</td>
+                                    <td className={styles.boleta}>2024600000</td>
+                                    <td className={styles.name}>Juares KKastillo Rubencio Graviel</td>
+                                    {/* Boton o cuadro por fecha*/}
                                 </tr>
+
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div className={styles.class_scanner_container}>
                     <div className={styles.class_scanner_div}>
-                        
+
                     </div>
                 </div>
             </div>
         </>
     )
-    
+
 }
-/*
-const getServerSideProps = async ({id}) =>{
-    //Aquí usar el id para realizar el manejo de sesiones y la obtención de los datos de la clase, no?
-    
-    Así es
-}
-*/

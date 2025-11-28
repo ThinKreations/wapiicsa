@@ -71,7 +71,13 @@ export default function Home() {
         </div>
         <div className={styles.auth_block}>
           {login ? (
-            <form key="login" className={styles.login_form}>
+            <form
+              key="login"
+              className={styles.login_form}
+              onSubmit={() => {
+                router.push("/clases/");
+              }}
+            >
               <h2>Inicia Sesión</h2>
               <div className={styles.login_inputContainer}>
                 <input
@@ -131,6 +137,7 @@ export default function Home() {
               </div>
               <button
                 className={styles.login_button}
+                type="submit"
                 onClick={() => {
                   router.push("/clases");
                 }}

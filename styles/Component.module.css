@@ -61,11 +61,17 @@
 /* DB Card */
 
 .dash_card{
+    width: 17.5%;
+    min-width: max-content;
     background-color: var(--background);
-    margin: 20px;
+    margin: 15px;
     padding: 10px;
     border: 1px solid var(--input-border);
     border-radius: 5px;
+}
+.dash_card h3{
+    margin: 2px;
+    margin-top: 5px;
 }
 .dash_card:hover{
     cursor: pointer;
@@ -74,6 +80,7 @@
 
 .span_id{
     padding: 0px;
+    font-size: 13px;
     color: var(--input-border);
 }
 
@@ -90,19 +97,19 @@
     background-size: 90%;
     background-position: center;
     background-repeat: no-repeat;
-    width: 300px;
-    height: 300px;
+    width: 350px;
+    height: 350px;
     border-radius: 7px;
-    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
-    border: 1px solid rgba(0,0,0,0.2);
+    filter: opacity(60%);
 }
 .uploader_input_container:hover{
-    background-color: rgba(255,255,255,0.5);
+    filter: opacity(95%);
+    cursor: pointer;
 }
 .uploader_input_container input{
     filter: opacity(0%);
-    width: 300px;
-    height: 300px;
+    width: 350px;
+    height: 350px;
 }
 .u_submit{
     color: white;
@@ -110,12 +117,13 @@
     outline: none;
     padding: 7px;
     font-size: 20px;
+    margin: 15px;
     margin-top: 20px;
-    margin: 5px;
     border-radius:4px;
     background-color: rgb(40,150,40);
 }
 .u_submit:hover{
+    cursor: pointer;
     background-color: rgba(40,180,40,0.8);
 }
 
@@ -124,15 +132,17 @@
     border: none;
     outline: none;
     padding: 7px;
+    margin: 15px;
     font-size: 20px;
     border-radius:4px;
     background-color: rgb(150, 20, 20);
 }
 .u_cancel:hover{
+    cursor: pointer;
     background-color: rgba(180,20,20,0.8);
 }
 
-@media (max-width: 600px){
+@media (max-width: 700px){
     .logo{
         width: 40%;
         height: 40%;
@@ -148,4 +158,7 @@
         min-width: fit-content;
         width: fit-content;
     }
+    .dash_card{
+        width: 100%;
+    }   
 }
