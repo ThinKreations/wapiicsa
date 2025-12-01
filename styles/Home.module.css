@@ -67,7 +67,7 @@
 
   .login_inputContainer{
       position: relative;
-      margin: 25px 0;
+      margin: 30px 0;
       width: 100%;
   }
   .login_input{
@@ -156,24 +156,19 @@
     text-decoration: underline;
   }
 
-  .login_showpass, .login_showpass2{
+  .login_showpass{
     border: none;
     outline: none;
     background-color: transparent;
-    position: relative;
-    left: 182;
-    bottom: 48;
     color: var(--input-border);
   }
   .login_showpass:hover{
     color: var(--input-border-hover);
   }
-  .login_showpass2{ /* xd */
-    position: relative;
-    left: 120;
-  }
-  .login_showpass2:hover{
-    color: var(--input-border-hover);
+
+  .input_container{
+
+    display: flex;
   }
 
   @media (max-width: 600px) {

@@ -90,34 +90,26 @@ export default function Home() {
                 <label className={styles.login_label}>Usuario</label>
                 <div className={styles.underline}></div>
               </div>
-              <div className={styles.login_inputContainer}>
-                <input
-                  className={styles.login_input}
-                  value={pass}
-                  onChange={(e) => setPass(e.target.value)}
-                  type={show ? "password" : "text"}
-                  required
-                />
-                <label className={styles.login_label}>Contraseña</label>
-                <div className={styles.underline}></div>
+              <div className={styles.input_container}>
+                <div className={styles.login_inputContainer}>
+                  <input
+                    className={styles.login_input}
+                    value={pass}
+                    onChange={(e) => setPass(e.target.value)}
+                    type={show ? "password" : "text"}
+                    required
+                  />
+                  <label className={styles.login_label}>Contraseña</label>
+                  <div className={styles.underline}></div>
+                </div>
+                <button
+                  className={`${styles.login_showpass} material-icons`}
+                  type="button"
+                  onClick={toShowPass}
+                >
+                  {show ? "visibility" : "visibility_off"}
+                </button>
               </div>
-              {show ? (
-                <button
-                  className={`${styles.login_showpass} material-icons`}
-                  type="button"
-                  onClick={toShowPass}
-                >
-                  visibility
-                </button>
-              ) : (
-                <button
-                  className={`${styles.login_showpass} material-icons`}
-                  type="button"
-                  onClick={toShowPass}
-                >
-                  visibility_off
-                </button>
-              )}
               <Link
                 href={"/sesion/recuperar"}
                 className={styles.login_link_recover}
@@ -181,35 +173,28 @@ export default function Home() {
                 <label className={styles.login_label}>Correo</label>
                 <div className={styles.underline}></div>
               </div>
-              <div className={styles.login_inputContainer}>
-                <input
-                  className={styles.login_input}
-                  value={pass}
-                  onChange={(e) => setPass(e.target.value)}
-                  required
-                  type={show ? "password" : "text"}
-                />
-                <label className={styles.login_label}>Contraseña</label>
-                <div className={styles.underline}></div>
+              <div className={styles.input_container}>
+                <div className={styles.login_inputContainer}>
+                  <input
+                    className={styles.login_input}
+                    value={pass}
+                    onChange={(e) => setPass(e.target.value)}
+                    type={show ? "password" : "text"}
+                    required
+                  />
+                  <label className={styles.login_label}>Contraseña</label>
+                  <div className={styles.underline}></div>
+                </div>
+                <button
+                  className={`${styles.login_showpass} material-icons`}
+                  type="button"
+                  onClick={toShowPass}
+                >
+                  {show ? "visibility" : "visibility_off"}
+                </button>
               </div>
-              {show ? (
-                <button
-                  className={styles.login_showpass2}
-                  type="button"
-                  onClick={toShowPass}
-                >
-                  <span className="material-icons">visibility</span>
-                </button>
-              ) : (
-                <button
-                  className={styles.login_showpass2}
-                  type="button"
-                  onClick={toShowPass}
-                >
-                  <span className="material-icons">visibility_off</span>
-                </button>
-              )}
-              <button className={styles.login_button}>
+
+              <button type="submit" className={styles.login_button}>
                 <font size="5">R e g i s t r a r</font>
               </button>
               <br />

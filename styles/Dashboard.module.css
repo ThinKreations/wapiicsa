@@ -134,6 +134,14 @@
   filter: invert();
 }
 
+/* Config */
+
+.config_form{
+  width: 20%;
+  padding: 10px;
+}
+
+
 @media (max-width: 600px) {
   .dash_ctrl{
     justify-content: center;
