@@ -91,7 +91,10 @@ export default function Home() {
                 <div className={styles.underline}></div>
               </div>
               <div className={styles.input_container}>
-                <div className={styles.login_inputContainer}>
+                <div
+                  className={styles.login_inputContainer}
+                  style={{ margin: "0" }}
+                >
                   <input
                     className={styles.login_input}
                     value={pass}
@@ -110,10 +113,7 @@ export default function Home() {
                   {show ? "visibility" : "visibility_off"}
                 </button>
               </div>
-              <Link
-                href={"/sesion/recuperar"}
-                className={styles.login_link_recover}
-              >
+              <Link href={"/recuperar"} className={styles.login_link_recover}>
                 Olvidé mi contraseña
               </Link>
               <div className={styles.login_checkbox}>

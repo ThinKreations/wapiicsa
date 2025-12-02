@@ -137,7 +137,6 @@
     font-size: 13px;
     color: var(--input-border);
     position: relative;
-    bottom:35;
     left: 20;
   }
   .login_link_recover:hover{
@@ -167,7 +166,7 @@
   }
 
   .input_container{
-
+    
     display: flex;
   }
 

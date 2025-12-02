@@ -1,14 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
-*{
-  border: 1px solid black;
-}
+
 
 :root {
   --background: rgb(220, 220, 220);
   --foreground: rgb(0, 0, 0);
   --input-border: rgb(130, 130, 130);
-  --input-border-hover: rgb(20,20,20);
+  --input-border-hover: rgb(20, 20, 20);
 }
 
 /*
@@ -48,9 +46,10 @@ a {
   text-decoration: none;
 }
 
-button{
+button {
   font-family: Geist, Montserrat, Arial, Helvetica, sans-serif;
 }
+
 /*
 @media (prefers-color-scheme: dark) {
   html {
