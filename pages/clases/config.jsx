@@ -22,16 +22,16 @@ export default function Settings() {
         e.preventDefault();
         try {
             if (pass2 !== pass3) {
-                return
+                console.warn("Las contraseñas no son iguales")
             }
-            const res = await camPassword({
+            /*const res = await camPassword({
                 username: user_profesor,
                 correo: email,
                 passActual: pass1,
                 passNueva: pass2
             });
             console.log(res);
-            setLogin(true);
+            setLogin(true);*/
         } catch (error) {
             console.log(error);
         }
@@ -41,10 +41,10 @@ export default function Settings() {
         setShow1(!show1);
     }
     function showPass2() {
-        setShow1(!show2);
+        setShow2(!show2);
     }
     function showPass3() {
-        setShow1(!show3);
+        setShow3(!show3);
     }
     return (
         <>

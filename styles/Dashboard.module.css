@@ -162,5 +162,8 @@
   .dash_table td{
     font-size: 15px;
   }
-  
+  .config_form{
+    width: 60%;
+    margin-top: 35px;
+  }
 }

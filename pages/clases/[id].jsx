@@ -1,16 +1,21 @@
 import MainHead from "@/components/MainHead";
 import Header from "@/components/Header";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "@/styles/Class.module.css"
 import { createWorker } from 'tesseract.js';
 let user_profesor = "axel"
-
+import { setAsistencia } from "../api/asistencia-http";
 
 export default function Clase() {
     const router = useRouter()
     const { id } = router.query;
 
+    useEffect(() => {
+        const loader = setInterval(() => {
+            setAsistencia({ clase: id, user_profesor: user_profesor, boleta: boleta })
+        })
+    }, [])
 
     return (
         <>
@@ -63,3 +68,8 @@ export default function Clase() {
     )
 
 }
+/*
+export default function getServerSideProps(){
+
+}
+*/

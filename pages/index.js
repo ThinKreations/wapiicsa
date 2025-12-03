@@ -103,7 +103,7 @@ export default function Home() {
                     required
                   />
                   <label className={styles.login_label}>Contraseña</label>
-                  <div className={styles.underline}></div>
+                  <div className={styles.underline} style={{ top: "5" }}></div>
                 </div>
                 <button
                   className={`${styles.login_showpass} material-icons`}
@@ -163,7 +163,10 @@ export default function Home() {
                 <label className={styles.login_label}>Usuario</label>
                 <div className={styles.underline}></div>
               </div>
-              <div className={styles.login_inputContainer}>
+              <div
+                className={styles.login_inputContainer}
+                style={{ margin: "0" }}
+              >
                 <input
                   className={styles.login_input}
                   value={email}
