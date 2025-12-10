@@ -3,64 +3,39 @@ import Header from "@/components/Header";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styles from "@/styles/Class.module.css"
-import { createWorker } from 'tesseract.js';
 let user_profesor = "axel"
 import { setAsistencia } from "../api/asistencia-http";
+import { Scanner } from "@yudiel/react-qr-scanner";
+import { notFound } from "next/navigation";
 
-export default function Clase() {
+export default function Clase({ clase, fechas, alumnos, asistencias }) {
     const router = useRouter()
     const { id } = router.query;
 
     useEffect(() => {
-        const loader = setInterval(() => {
-            setAsistencia({ clase: id, user_profesor: user_profesor, boleta: boleta })
-        })
+        console.log(alumnos)
     }, [])
 
     return (
         <>
-
             <MainHead title={id} />
             <Header user_profesor={user_profesor} />
-            <div className={styles.class_maincontainer}>
-                <div className={styles.class_centered}>
-                    <div className={styles.class_header}>
-                        <div className={styles.guest_info}>
-                            <span className="material-icons">person</span>
-                            <p>Invitado: <strong>{id}</strong></p>
-                        </div>
-                        <button className={styles.add_guest_btn}>
-                            <span className="material-icons">person_add</span>
-                            + Invitado
-                        </button>
+            <div className={styles.class_container}>
+                <div className={styles.list_container}>
+                    <div className={styles.list_buttons}>
+                        <form>
+                            <button>+ Alumno</button>
+                        </form>
+                        <form>
+                            <button>+ Invitado</button>
+                        </form>
+                        <p>Id Invitado</p>
                     </div>
-
-                    <div className={styles.table_wrapper}>
-                        <table className={styles.spaced_table}>
-                            <thead>
-                                <tr>
-                                    <th>N.L.</th>
-                                    <th>Boleta</th>
-                                    <th>Nombre</th>
-                                    {/* Fechas */}
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                <tr>
-                                    <td className={styles.number}>1</td>
-                                    <td className={styles.boleta}>2024600000</td>
-                                    <td className={styles.name}>Juares KKastillo Rubencio Graviel</td>
-                                    {/* Boton o cuadro por fecha*/}
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
+                    <table></table>
                 </div>
-                <div className={styles.class_scanner_container}>
-                    <div className={styles.class_scanner_div}>
-
+                <div className={styles.scan_container}>
+                    <div>
+                        <Scanner />
                     </div>
                 </div>
             </div>
@@ -68,8 +43,23 @@ export default function Clase() {
     )
 
 }
-/*
-export default function getServerSideProps(){
 
+export async function getServerSideProps({ params }) {
+    const { id } = params;
+
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/clases/${id}`
+    );
+
+    const resJSON = await res.json();
+
+    return {
+        props: {
+            clase: resJSON.clase || null,
+            fechas: resJSON.fechas || [],
+            alumnos: resJSON.alumnos || [],
+            asistencias: resJSON.asistencias || [],
+            notFound: false
+        }
+    };
 }
-*/

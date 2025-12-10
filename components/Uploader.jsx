@@ -1,9 +1,11 @@
 'use-client'
 import axios from "axios"
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 import { useState } from "react"
 import Swal from "sweetalert2";
 import styles from '@/styles/Component.module.css'
 import { useRouter } from "next/router";
+
 
 export default function Uploader() {
     const [file, setFile] = useState(0);
@@ -16,38 +18,38 @@ export default function Uploader() {
     }
 
     const upload = async (e) => {
-        if (!file) {
-            Swal.fire({
-                title: 'Selecciona un archivo PDF',
-                icon: 'error',
-                timer: '1500'
-            })
-            console.log("xd")
-            return;
-        }
+        e.preventDefault();
+        if (!file) return
         setLoading(true);
         try {
-            const formData = new FormData();
-            formData.append('file', file);
-
-            const res = await axios.post("url".formData, {
+            const res = await axios.post(`${API_URL}/clases`, file, {
                 headers: {
-                    'Content-Type': 'multipart/formdata'
-                    //Validar sesión
-                }
+                    'Authorization': "Bearer TOKEN",
+                    'Content-Type': 'multipart/formdata',
+                    'Accept': "application/json",
+                },
+                withCredentials: true,
             })
+            console.log(res);
+            if (res.status !== 200) {
+                Swal.fire({
+                    titleText: 'Error al subir grupo.',
+                    icon: 'error',
+                    allowOutsideClick: 'false',
+                    timer: 1000
+                })
+                return;
+            }
             Swal.fire({
                 titleText: 'Grupo subido',
                 icon: 'success',
-                theme: 'bootstrap-4-dark',
-                allowOutsideClick: 'false',
-                showCloseButton: 'true'
+                timer: 1000
             })
         } catch (err) {
             Swal.fire({
                 titleText: 'Error al subir el archivo',
                 icon: 'error',
-                timer: '500'
+                timer: 1000
             })
         } finally {
             setLoading(false);
@@ -59,7 +61,7 @@ export default function Uploader() {
             <div className={styles.uploader_container}>
                 <form onSubmit={upload}>
                     <div className={styles.uploader_input_container}>
-                        <input accept="application/pdf" type="file" onChange={fileChange} disabled={loading} />
+                        <input accept="application/pdf" type="file" onChange={fileChange} />
                         <center><p>Selecciona el ícono, o arrastra tu PDF aquí.</p></center>
 
                     </div>

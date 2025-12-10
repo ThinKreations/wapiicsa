@@ -1,28 +1,76 @@
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import Swal from "sweetalert2";
+
 export async function signUp({ username, correo, contrasena }) {
   try {
-    const response = await fetch("http://localhost:8000/api/registro", {
+    const res = await fetch(`${API_URL}/registro`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         user_profesor: username,
         correo: correo,
         contrasena: contrasena,
       }),
     });
-
-    const data = await response.json();
-
-    if (!response.ok) throw new Error(data.message);
-    return data;
+    console.log(res);
+    const resJSON = await res.json();
+    if (res.status !== 200) {
+      Swal.fire({
+        icon: "error",
+        title: "Ha ocurrido un error",
+        timer: 1000,
+      });
+      return;
+    }
+    Swal.fire({
+      icon: "success",
+      title: "¡Registro exitoso!",
+      timer: 1000,
+    });
+    return { res, resJSON };
   } catch (error) {
-    console.error("Error de registro:", error);
-    throw error;
+    Swal.fire({
+      icon: "error",
+      title: "Ha ocurrido un error",
+      timer: 1000,
+    });
+    return;
+  }
+}
+
+export async function logIn({ username, contrasena }) {
+  try {
+    const res = await fetch(`${API_URL}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_profesor: username,
+        contrasena: contrasena,
+      }),
+    });
+    const resJSON = await res.json();
+    if (res.status === 401) {
+      Swal.fire({
+        icon: "error",
+        title: "Contraseña incorrecta",
+        timer: "1000",
+      });
+    }
+    Swal.fire({
+      icon: "success",
+      timer: "1000",
+    });
+    console.log(resJSON);
+  } catch (error) {
+    console.error(error);
   }
 }
 
 export async function recPassword({ username, correo }) {
   try {
-    const response = await fetch("", {
+    const res = await fetch("", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -30,11 +78,11 @@ export async function recPassword({ username, correo }) {
         correo: correo,
       }),
     });
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.message);
+    const resJSON = await res.json();
+    if (!res.ok) {
+      throw new Error(resJSON.message);
     }
-    return data;
+    return resJSON;
   } catch (error) {
     console.error("Error al recuperar:", error);
   }
@@ -42,7 +90,7 @@ export async function recPassword({ username, correo }) {
 
 export async function camPassword({ username, correo, passActual, passNueva }) {
   try {
-    const response = await fetch("", {
+    const res = await fetch("", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -52,32 +100,12 @@ export async function camPassword({ username, correo, passActual, passNueva }) {
         passNueva: passNueva,
       }),
     });
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.message);
+    const resJSON = await res.json();
+    if (!res.ok) {
+      throw new Error(resJSON.message);
     }
-    return data;
+    return resJSON;
   } catch (error) {
     console.error("Error al cambiar:", error);
   }
-}
-
-export async function login({ correo, password }) {
-  /*try {
-        const response = await fetch('', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ correo, password })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) throw new Error(data.message);
-        return data;
-
-    } catch (error) {
-        console.error('Error en login:', error);
-        throw error;
-    }*/
-  return { correo, password };
 }

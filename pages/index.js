@@ -4,26 +4,24 @@ import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-
-import { signUp } from "./api/profesor-http";
+import { signUp, logIn } from "./api/profesor-http";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schemaLogin } from "@/schemas/login";
+import { schemaSignUp } from "@/schemas/crearCuenta";
+import { register } from "next/dist/next-devtools/userspace/pages/pages-dev-overlay-setup";
 
 export default function Home() {
   const router = useRouter();
   const [login, setLogin] = useState(true);
   const [invitado, setLogInvitado] = useState(true);
   const [show, setShow] = useState(true);
-
-  const [user, setUser] = useState("");
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
   const [remember, setRemember] = useState(false);
 
   function toSignUp() {
     setLogin(!login);
-    setUser("");
-    setEmail("");
-    setPass("");
+    reset();
   }
 
   function toShowPass() {
@@ -34,23 +32,54 @@ export default function Home() {
     setLogInvitado(!invitado);
   }
 
-  useEffect(() => {
-    console.log(remember);
+  /* Para el login xd */
+  const {
+    register: registerLogin,
+    handleSubmit: handleSubmitLogin,
+    formState: { errors: errorsLogin },
+    reset,
+  } = useForm({
+    resolver: yupResolver(schemaLogin),
   });
 
-  const registrar = async (e) => {
-    e.preventDefault();
+  /* Para el signup xd */
+  const {
+    register: registerSignup,
+    handleSubmit: handleSubmitSignup,
+    formState: { errors: errorsSignup },
+  } = useForm({
+    resolver: yupResolver(schemaSignUp),
+  });
 
+  const onSignup = async (data) => {
     try {
       const res = await signUp({
-        username: user,
-        correo: email,
-        contrasena: pass,
+        username: data.usuario,
+        correo: data.correo,
+        contrasena: data.contrasena,
       });
-      console.log(res);
       setLogin(true);
     } catch (error) {
+      reset();
+      setLogin(false);
       console.log(error);
+    }
+  };
+
+  const onLogin = async (data) => {
+    try {
+      const res = await logIn({
+        username: data.usuario,
+        contrasena: data.contrasena,
+      });
+      setLogin(true);
+      console.log(res);
+      if (res[0] !== "" || res !== undefined) {
+        return;
+      }
+      router.push("/clases");
+    } catch (error) {
+      setLogin(false);
     }
   };
 
@@ -74,18 +103,14 @@ export default function Home() {
             <form
               key="login"
               className={styles.login_form}
-              onSubmit={() => {
-                router.push("/clases/");
-              }}
+              onSubmit={handleSubmitLogin(onLogin)}
             >
               <h2>Inicia Sesión</h2>
               <div className={styles.login_inputContainer}>
                 <input
                   className={styles.login_input}
-                  value={user}
-                  onChange={(e) => setUser(e.target.value)}
+                  {...registerLogin("usuario")}
                   type="text"
-                  required
                 />
                 <label className={styles.login_label}>Usuario</label>
                 <div className={styles.underline}></div>
@@ -97,10 +122,8 @@ export default function Home() {
                 >
                   <input
                     className={styles.login_input}
-                    value={pass}
-                    onChange={(e) => setPass(e.target.value)}
+                    {...registerLogin("contrasena")}
                     type={show ? "password" : "text"}
-                    required
                   />
                   <label className={styles.login_label}>Contraseña</label>
                   <div className={styles.underline} style={{ top: "5" }}></div>
@@ -127,13 +150,7 @@ export default function Home() {
                 />
                 <label>Recuerdame</label>
               </div>
-              <button
-                className={styles.login_button}
-                type="submit"
-                onClick={() => {
-                  router.push("/clases");
-                }}
-              >
+              <button className={styles.login_button} type="submit">
                 <font size="5">A c c e d e r</font>
               </button>
               <br />
@@ -150,15 +167,13 @@ export default function Home() {
             <form
               key="signup"
               className={styles.login_form}
-              onSubmit={registrar}
+              onSubmit={handleSubmitSignup(onSignup)}
             >
               <h2>Regístrate</h2>
               <div className={styles.login_inputContainer}>
                 <input
                   className={styles.login_input}
-                  value={user}
-                  onChange={(e) => setUser(e.target.value)}
-                  required
+                  {...registerSignup("usuario")}
                 />
                 <label className={styles.login_label}>Usuario</label>
                 <div className={styles.underline}></div>
@@ -169,9 +184,7 @@ export default function Home() {
               >
                 <input
                   className={styles.login_input}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
+                  {...registerSignup("correo")}
                 />
                 <label className={styles.login_label}>Correo</label>
                 <div className={styles.underline}></div>
@@ -180,10 +193,8 @@ export default function Home() {
                 <div className={styles.login_inputContainer}>
                   <input
                     className={styles.login_input}
-                    value={pass}
-                    onChange={(e) => setPass(e.target.value)}
                     type={show ? "password" : "text"}
-                    required
+                    {...registerSignup("contrasena")}
                   />
                   <label className={styles.login_label}>Contraseña</label>
                   <div className={styles.underline}></div>
@@ -196,15 +207,45 @@ export default function Home() {
                   {show ? "visibility" : "visibility_off"}
                 </button>
               </div>
+              <div className={styles.input_container}>
+                <div
+                  className={styles.login_inputContainer}
+                  style={{ margin: "0" }}
+                >
+                  <input
+                    className={styles.login_input}
+                    type={show ? "password" : "text"}
+                    {...registerSignup("contrasena2")}
+                  />
+                  <label className={styles.login_label}>
+                    Confirmar Contraseña
+                  </label>
+                  <div className={styles.underline}></div>
+                </div>
+              </div>
 
-              <button type="submit" className={styles.login_button}>
+              <button
+                type="submit"
+                className={styles.login_button}
+                style={{ marginTop: "30px" }}
+              >
                 <font size="5">R e g i s t r a r</font>
               </button>
               <br />
               <br />
+
               <button className={styles.login_btn_options} onClick={toSignUp}>
                 O inicia sesión
               </button>
+              <br />
+              <p className={styles.errors}>{errorsSignup.usuario?.message}</p>
+              <p className={styles.errors}>{errorsSignup.correo?.message}</p>
+              <p className={styles.errors}>
+                {errorsSignup.contrasena?.message}
+              </p>
+              <p className={styles.errors}>
+                {errorsSignup.contrasena2?.message}
+              </p>
             </form>
           )}
         </div>

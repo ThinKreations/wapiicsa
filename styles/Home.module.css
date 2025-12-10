@@ -41,7 +41,7 @@
   }
   .auth_block{
     margin: 30px;
-    width: 20vw;
+    width: 25vw;
     height: 70vh;
     align-items: center;
     padding: 3vw;
@@ -137,7 +137,7 @@
     font-size: 13px;
     color: var(--input-border);
     position: relative;
-    left: 20;
+    left: 3.5vw;
   }
   .login_link_recover:hover{
     color: var(--input-border-hover);
@@ -168,6 +168,13 @@
   .input_container{
     
     display: flex;
+  }
+
+  .errors{
+    color:red
+  }
+  .errors:hover{
+    color: rgb(160,20,20);
   }
 
   @media (max-width: 600px) {

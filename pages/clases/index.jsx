@@ -9,11 +9,10 @@ import { useRouter } from "next/router";
 import Card from "@/components/Card";
 import load from "@/src/loading.gif"
 
-export default function Dashboard() {
+export default function Dashboard({ clases }) {
 
   const router = useRouter();
   const [view, setView] = useState(0);
-  const [clases, setClases] = useState([]);
   const [loading, setLoading] = useState(true);
   let user_profesor = "axel"
 
@@ -26,7 +25,7 @@ export default function Dashboard() {
   const setViewByLocalStorage = () => {
     setView(localStorage.getItem("view"))
   }
-
+  /*
   const getClases = async () => {
     try {
       const res = await fetch(
@@ -40,10 +39,10 @@ export default function Dashboard() {
       setLoading(false);
     }
   };
-
+  */
   useEffect(() => {
     setViewByLocalStorage();
-    getClases();
+    console.log(clases)
   }, []);
 
   return (
@@ -169,54 +168,34 @@ export default function Dashboard() {
 }
 
 export async function getServerSideProps(context) {
-  const cookies = context.req.headers.cookie || "";
-  const cookieMap = Object.fromEntries(
-    cookies.split("; ").map((c) => c.split("="))
-  );
-
-  const user_profesor = cookieMap.user_profesor;
-  /*
-  if (!user_profesor) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
-  */
+  const cookies = context.req.cookies;
 
   let res;
+
   try {
     res = await fetch("http://localhost:8000/api/clases", {
       method: "POST",
       headers: {
+        "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json",
-        Accept: "application/json",
+        "Accept": "application/json",
       },
       body: JSON.stringify({
         user_profesor: user_profesor,
       }),
     });
   } catch (e) {
-    console.log(e)
+    return { props: { clases: [] } };
+  }
+  if (!res.ok) {
+    return { props: { clases: [] } };
   }
 
-  if (!res) {
-    return {
-      props: {
-        clases: []
-      }
-    }
-  }
-  const data = await res.json();
+  const resJSON = await res.json();
+
   return {
     props: {
-      clases: data,
+      clases: resJSON.data || [],
     },
   };
-
-
-
-
 }
