@@ -3,7 +3,7 @@ import MainHead from "@/components/MainHead";
 import Image from "next/image";
 import styles from "@/styles/Dashboard.module.css";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Header from "@/components/Header";
 import { useRouter } from "next/router";
 import Card from "@/components/Card";
@@ -14,8 +14,6 @@ export default function Dashboard({ clases }) {
   const router = useRouter();
   const [view, setView] = useState(0);
   const [loading, setLoading] = useState(true);
-  let user_profesor = "axel"
-
 
   const changeView = (value) => {
     setView(value);
@@ -25,39 +23,19 @@ export default function Dashboard({ clases }) {
   const setViewByLocalStorage = () => {
     setView(localStorage.getItem("view"))
   }
-  /*
-  const getClases = async () => {
-    try {
-      const res = await fetch(
-        `http://localhost:8000/api/clases?user_profesor=${user_profesor}`
-      );
-      const data = await res.json();
-      setClases(data.data);
-    } catch (err) {
-      console.error("Error al obtener clases:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-  */
+
   useEffect(() => {
+    !clases ? setLoading(true) : setLoading(false)
     setViewByLocalStorage();
-    console.log(clases)
-  }, []);
+  });
 
   return (
     <>
       <MainHead title="WAPA" />
-      <Header user_profesor={user_profesor} />
+      <Header clases={clases} />
       <div className={styles.dash_container}>
         <div className={styles.dash_ctrl}>
           <div>
-            {/*
-            <form className={styles.dash_ctrl_srch}>
-              <input className={styles.dash_ctrl_srch_input} placeholder="Buscar clase o secuencia"/>
-              <button className={`${styles.dash_ctrl_srch_btn} material-icons`} type="button">search</button>
-            </form>
-            */}
             <h1>Bienvenido</h1>
           </div>
           <div className={styles.dash_ctrl_view}>
@@ -167,32 +145,26 @@ export default function Dashboard({ clases }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const cookies = context.req.cookies;
-
-  let res;
-
-  try {
-    res = await fetch("http://localhost:8000/api/clases", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-      body: JSON.stringify({
-        user_profesor: user_profesor,
-      }),
-    });
-  } catch (e) {
-    return { props: { clases: [] } };
-  }
-  if (!res.ok) {
-    return { props: { clases: [] } };
+export async function getServerSideProps({ req }) {
+  const res = await fetch("http://localhost:8000/api/clases", {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Cookie": req.headers.cookie || "",
+    },
+  });
+  if (!req.headers.cookie) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      }
+    }
   }
 
   const resJSON = await res.json();
-
   return {
     props: {
       clases: resJSON.data || [],

@@ -18,6 +18,7 @@ export default function Home() {
   const [invitado, setLogInvitado] = useState(true);
   const [show, setShow] = useState(true);
   const [remember, setRemember] = useState(false);
+  const [correct, setCorrect] = useState(true);
 
   function toSignUp() {
     setLogin(!login);
@@ -67,20 +68,21 @@ export default function Home() {
   };
 
   const onLogin = async (data) => {
+    setCorrect(true);
     try {
-      const res = await logIn({
+      const { res, resJSON } = await logIn({
         username: data.usuario,
         contrasena: data.contrasena,
       });
-      setLogin(true);
-      console.log(res);
-      if (res[0] !== "" || res !== undefined) {
+      console.log(res.status);
+      console.log(resJSON);
+      if (res.status !== 200) {
+        setCorrect(false);
         return;
       }
+
       router.push("/clases");
-    } catch (error) {
-      setLogin(false);
-    }
+    } catch (error) {}
   };
 
   return (
@@ -126,7 +128,7 @@ export default function Home() {
                     type={show ? "password" : "text"}
                   />
                   <label className={styles.login_label}>Contraseña</label>
-                  <div className={styles.underline} style={{ top: "5" }}></div>
+                  <div className={styles.underline}></div>
                 </div>
                 <button
                   className={`${styles.login_showpass} material-icons`}

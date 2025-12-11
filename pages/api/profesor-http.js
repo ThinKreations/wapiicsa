@@ -45,6 +45,7 @@ export async function logIn({ username, contrasena }) {
     const res = await fetch(`${API_URL}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({
         user_profesor: username,
         contrasena: contrasena,
@@ -57,14 +58,51 @@ export async function logIn({ username, contrasena }) {
         title: "Contraseña incorrecta",
         timer: "1000",
       });
+
+      return { res, resJSON };
     }
     Swal.fire({
       icon: "success",
+      title: "Bienvenido",
+      timer: "1000",
+      showConfirmButton: false,
+    });
+    return { res, resJSON };
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: `Error`,
       timer: "1000",
     });
-    console.log(resJSON);
-  } catch (error) {
-    console.error(error);
+  }
+}
+
+export async function logOut() {
+  try {
+    const res = await fetch(`${API_URL}/logout`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+    const resJSON = await res.json();
+    if (res.status !== 200) {
+      Swal.fire({
+        icon: "error",
+        title: "Error al cerrar sesión",
+        timer: 1000,
+      });
+      return { res, resJSON };
+    }
+    return { res, resJSON };
+  } catch (errors) {
+    Swal.fire({
+      icon: "error",
+      title: "Error al cerrar sesión",
+      timer: 1000,
+    });
   }
 }
 

@@ -1,5 +1,4 @@
 .header{
-    /*background-color: rgb(100, 5, 20);*/
     background-image: linear-gradient(90deg, rgba(100, 5, 20, 0.8) 0%, rgb(0, 0, 0) 90%), url('../src/bg.jpg');
     background-size: contain;
     background-repeat: repeat;
@@ -55,7 +54,6 @@
 }
 .header_select option{
     color: black;
-    
 }
 
 /* DB Card */
@@ -88,9 +86,7 @@
 
 .uploader_container{
     margin-top: 40px;
-    
     text-align: center;    
-    
 }
 .uploader_input_container{
     background-image: url('../src/file.png');
@@ -100,10 +96,10 @@
     width: 350px;
     height: 350px;
     border-radius: 7px;
-    filter: opacity(60%);
+    filter: opacity(50%);
 }
 .uploader_input_container:hover{
-    filter: opacity(95%);
+    filter: opacity(80%);
     cursor: pointer;
 }
 .uploader_input_container input{
