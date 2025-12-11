@@ -61,12 +61,6 @@ export async function logIn({ username, contrasena }) {
 
       return { res, resJSON };
     }
-    Swal.fire({
-      icon: "success",
-      title: "Bienvenido",
-      timer: "1000",
-      showConfirmButton: false,
-    });
     return { res, resJSON };
   } catch (error) {
     Swal.fire({

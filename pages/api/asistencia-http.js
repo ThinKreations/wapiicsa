@@ -44,7 +44,6 @@ export async function postAsistencia({ id, boleta }) {
 }
 
 export async function putAsistencia({ id, boleta, fecha, aof }) {
-  console.log(id, boleta, fecha, aof);
   try {
     const res = await fetch(`${API_URL}/clases/${id}`, {
       method: "PUT",

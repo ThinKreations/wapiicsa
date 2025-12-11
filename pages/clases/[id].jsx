@@ -17,8 +17,12 @@ export default function Clase({ clases, id }) {
     const [asistencias, setAsistencias] = useState([]);
     const [act, setAct] = useState(false)
     const [boletasEscaneadas, setBoletasEscaneadas] = useState([])
+    const [isProcessing, setIsProcessing] = useState(false);
 
     const subirAsistencia = async (id, boleta) => {
+        if (boletasEscaneadas.includes(boleta)) {
+            console.log('xd')
+        }
         try {
             const res = await postAsistencia({
                 id: id,
@@ -31,6 +35,15 @@ export default function Clase({ clases, id }) {
     }
 
     const modAsistencia = async (id, boleta, fecha, aof) => {
+        console.log(boletasEscaneadas)
+        setBoletasEscaneadas(prev => {
+            if (prev.includes(boleta)) {
+                return prev.filter(b => b !== boleta);
+            } else {
+                return [...prev, boleta];
+            }
+        });
+        console.log(boletasEscaneadas)
         try {
             const res = await putAsistencia({
                 id: id,
@@ -38,6 +51,7 @@ export default function Clase({ clases, id }) {
                 fecha: fecha,
                 aof: aof
             });
+
             setAct(!act)
         } catch (e) {
             console.error(e)
@@ -128,7 +142,9 @@ export default function Clase({ clases, id }) {
                 </div>
                 <div className={styles.scan_container}>
                     <div>
-                        <Scanner scanDelay={3000} allowMultiple={true} onScan={async (result) => {
+                        <Scanner scanDelay={5000} allowMultiple={true} onScan={async (result) => {
+                            if (isProcessing) return;
+                            setIsProcessing(true);
                             try {
                                 let web = result[0].rawValue;
                                 const regex = /([0-9]{2}|PE)[0-9]{8}/;
@@ -158,15 +174,14 @@ export default function Clase({ clases, id }) {
                                     const boletaExiste = alumnos.some(
                                         (alumno) => String(alumno.boleta).trim() === boleta
                                     )
-                                    if (!boletaExiste) {
+                                    if (boletasEscaneadas.includes(boleta)) {
                                         Swal.fire({
                                             icon: 'error',
-                                            title: 'Boleta no válida',
-                                            timer: 1000
+                                            title: 'Boleta ya escaneada',
+                                            timer: 1500
                                         });
                                         return;
                                     }
-                                    if (boletasEscaneadas.includes(boleta)) return;
                                     if (boletaExiste) {
                                         setBoletasEscaneadas(prev => [...prev, boleta]);
                                         Swal.fire({
@@ -174,10 +189,8 @@ export default function Clase({ clases, id }) {
                                             title: `${boleta}`,
                                             timer: 1500
                                         });
-                                        const asistenciaRes = await subirAsistencia(id, boleta);
-
+                                        await subirAsistencia(id, boleta);
                                     }
-
                                 } else {
                                     Swal.fire({
                                         icon: "error",
