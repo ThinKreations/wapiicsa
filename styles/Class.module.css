@@ -38,7 +38,8 @@
     overflow-y: auto;
     overflow-x: auto;
     z-index: 20;
-    border: 1px solid rgba(0,0,0,0.2);
+    border: 1px solid rgb(35,35,35);
+    border-radius: 5px 0px 0px 5px;
 }
 .table_container::-webkit-scrollbar {
     -webkit-appearance: none;
@@ -52,12 +53,11 @@
     height: 15px; 
 }
 .table_container::-webkit-scrollbar-corner {
-    background-color: var(--background); 
-    filter: invert();
+    background-color: rgb(35,35,35);
 }
 .table_container::-webkit-scrollbar-button:increment,
 .table_container::-webkit-scrollbar-button {
-    display: none;
+    display: none;    
 }
 .table_container::-webkit-scrollbar-thumb {
     background-color: var(--background);
@@ -81,14 +81,14 @@
 .table th{
     padding: 5px;
     border: none;
-    background-color: var(--background); 
-    filter: invert();
+    color: var(--background); 
+    background-color: rgb(35,35,35);
 }
 .table tr:hover{
     background-color: rgba(0,0,0,0.0.04);
 }
 .table td{
-    border-top: 1px solid rgba(0,0,0,0.2);
+    border-top: 1px solid rgb(35,35,35);
     padding: 5px;
     max-width: 150px;       
     overflow: hidden;
@@ -99,12 +99,12 @@
 
 .td_nl{
     text-align: center;
-    border-right: 1px solid rgba(0,0,0,0.2);
+    border-right: 1px solid rgb(35,35,35);
     width: 35px;
 }
 .td_boleta{
     text-align: center;
-    border-right: 1px solid rgba(0,0,0,0.2);
+    border-right: 1px solid rgb(35,35,35);
     width: 100px;
 }
 .td_nombre{
@@ -112,7 +112,7 @@
 }
 .td_fecha{
     width: 120px;
-    border-left: 1px solid rgba(0,0,0,0.2);
+    border-left: 1px solid rgb(35,35,35);
 }
 .td_fecha button{
     width: 80%;
@@ -129,8 +129,28 @@
     margin: 30px;
     width: 14vw;
     min-width: 150px;
+    height: fit-content;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 4px dotted rgb(35,35,35);
+}
+.scan_container:hover{
+    transition: 30s ease-in-out;
+
+    border: 4px dotted rgb(220,220,220);
+    filter: invert();
 }
 
-.scanner_container{
-border-radius: 10px;
+@media (max-width: 700px) {
+    .class_container{
+        padding-top: 170px;
+        flex-direction: column-reverse;
+    }
+    .scan_container{
+        width: calc(100vw - 70px);
+        align-items: center;
+        justify-content: center;
+        
+    }
+
 }

@@ -27,7 +27,7 @@ export default function Dashboard({ clases }) {
   useEffect(() => {
     !clases ? setLoading(true) : setLoading(false)
     setViewByLocalStorage();
-  });
+  }, []);
 
   return (
     <>
@@ -36,7 +36,7 @@ export default function Dashboard({ clases }) {
       <div className={styles.dash_container}>
         <div className={styles.dash_ctrl}>
           <div>
-            <h1>Bienvenido</h1>
+            <h1 className={styles.saludo}>Bienvenido</h1>
           </div>
           <div className={styles.dash_ctrl_view}>
             <button
@@ -61,8 +61,9 @@ export default function Dashboard({ clases }) {
             </button>
           </div>
         </div>
+        <br />
         {!loading ?
-          view == 0 ? (
+          clases.length < 1 ? ("No hay clases disponibles, agrega una para empezar.") : view == 0 ? (
             <div className={styles.dash_card_container}>
               {clases.map((c) => {
                 return (
@@ -103,7 +104,7 @@ export default function Dashboard({ clases }) {
                 <tbody>
                   {clases.map((c) => {
                     return (
-                      <tr
+                      <tr key={c.id_clase}
                         className={styles.dash_table_class}
                         onClick={() => {
                           router.push(`/clases/${c.id_clase}`);

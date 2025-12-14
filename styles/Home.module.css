@@ -42,10 +42,11 @@
   .auth_block{
     margin: 30px;
     width: 25vw;
+    min-width: max-content;
     height: 70vh;
-    align-items: center;
     padding: 3vw;
     border-left: 1px solid var(--input-border);
+    align-items: center;
   }
   .landing_block h1{
     margin: 25px 0;

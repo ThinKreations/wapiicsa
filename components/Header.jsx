@@ -40,7 +40,7 @@ export default function Header(props) {
                     <button className={`material-icons`} onClick={() => { router.push('/clases/') }}>
                         home
                     </button>
-                    <button className={`material-icons`}>
+                    <button className={`material-icons`} onClick={() => router.push('/clases/config')}>
                         settings
                     </button>
                     <button className={`material-icons`} onClick={logout}>

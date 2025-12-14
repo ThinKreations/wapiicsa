@@ -1,7 +1,55 @@
-export async function login() {
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import Swal from "sweetalert2";
+
+export async function nuevo({ id }) {
+  console.log(id);
   try {
+    const res = await fetch(`${API_URL}/nuevo-invitado/${id}`, {
+      method: "POST",
+      headers: { "content-Type": "application/json" },
+      credentials: "include",
+    });
+    const resJSON = await res.json();
+    if (!res.ok) {
+      Swal.fire({
+        icon: "error",
+        title: "Error al generar invitado.",
+        timer: 1000,
+      });
+    }
+
+    return { resJSON, res };
   } catch (e) {
     console.error(e);
+  }
+}
+
+export async function logIn({ id }) {
+  try {
+    const res = await fetch(`${API_URL}/invitado/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        id_invitado: parseInt(id),
+      }),
+    });
+    const resJSON = await res.json();
+    if (res.status === 401) {
+      Swal.fire({
+        icon: "error",
+        title: "ID inválida",
+        timer: "1000",
+      });
+      return { res, resJSON };
+    }
+    return { res, resJSON };
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: `Error`,
+      timer: "1000",
+    });
   }
 }
 
@@ -17,13 +65,13 @@ export async function setAsistencia({ id, user, boleta }) {
       },
     });
 
-    const data = await res.JSON;
+    const resJSON = await res.JSON;
 
     if (!res.ok) {
       throw new Error();
     }
 
-    return data;
+    return resJSON;
   } catch (error) {
     console.error(error);
   }

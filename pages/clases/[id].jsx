@@ -6,6 +6,7 @@ import styles from "@/styles/Class.module.css"
 import { Scanner } from "@yudiel/react-qr-scanner";
 import { notFound } from "next/navigation";
 import scrap from "../api/html-http";
+import { nuevo } from "../api/invitado-http";
 import { getAsistencias, postAsistencia, putAsistencia } from "../api/asistencia-http";
 import Swal from "sweetalert2";
 
@@ -18,6 +19,7 @@ export default function Clase({ clases, id }) {
     const [act, setAct] = useState(false)
     const [boletasEscaneadas, setBoletasEscaneadas] = useState([])
     const [isProcessing, setIsProcessing] = useState(false);
+    const [guest, setGuest] = useState([]);
 
     const subirAsistencia = async (id, boleta) => {
         if (boletasEscaneadas.includes(boleta)) {
@@ -29,6 +31,17 @@ export default function Clase({ clases, id }) {
                 boleta: boleta
             });
             setAct(!act)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const generarInvitado = async (id) => {
+        try {
+            const { resJSON } = await nuevo({
+                id: id
+            })
+            setGuest(resJSON.invitado)
         } catch (e) {
             console.log(e)
         }
@@ -80,11 +93,8 @@ export default function Clase({ clases, id }) {
             <div className={styles.class_container}>
                 <div className={styles.list_container}>
                     <div className={styles.list_buttons}>
-
-                        <form>
-                            <button>+ Invitado</button>
-                        </form>
-                        <p>Id Invitado</p>
+                        <button type="button" onClick={() => generarInvitado(id)}>+ Invitado</button>
+                        <p>{guest.length !== 0 ? `ID: ${guest}` : ``}</p>
                     </div>
                     <div className={styles.table_container}>
                         <table className={styles.table}>

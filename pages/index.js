@@ -63,7 +63,6 @@ export default function Home() {
     } catch (error) {
       reset();
       setLogin(false);
-      console.log(error);
     }
   };
 
@@ -74,8 +73,6 @@ export default function Home() {
         username: data.usuario,
         contrasena: data.contrasena,
       });
-      console.log(res.status);
-      console.log(resJSON);
       if (res.status !== 200) {
         setCorrect(false);
         return;
@@ -113,6 +110,7 @@ export default function Home() {
                   className={styles.login_input}
                   {...registerLogin("usuario")}
                   type="text"
+                  required
                 />
                 <label className={styles.login_label}>Usuario</label>
                 <div className={styles.underline}></div>
@@ -126,6 +124,7 @@ export default function Home() {
                     className={styles.login_input}
                     {...registerLogin("contrasena")}
                     type={show ? "password" : "text"}
+                    required
                   />
                   <label className={styles.login_label}>Contraseña</label>
                   <div className={styles.underline}></div>
@@ -161,94 +160,105 @@ export default function Home() {
                 Registrate aquí
               </button>
               <br />o<br />
-              <button className={styles.login_btn_options}>
+              <button
+                className={styles.login_btn_options}
+                onClick={() => router.push("guest")}
+              >
                 Accede como invitado
               </button>
             </form>
           ) : (
-            <form
-              key="signup"
-              className={styles.login_form}
-              onSubmit={handleSubmitSignup(onSignup)}
-            >
-              <h2>Regístrate</h2>
-              <div className={styles.login_inputContainer}>
-                <input
-                  className={styles.login_input}
-                  {...registerSignup("usuario")}
-                />
-                <label className={styles.login_label}>Usuario</label>
-                <div className={styles.underline}></div>
-              </div>
-              <div
-                className={styles.login_inputContainer}
-                style={{ margin: "0" }}
+            <>
+              <form
+                key="signup"
+                className={styles.login_form}
+                onSubmit={handleSubmitSignup(onSignup)}
               >
-                <input
-                  className={styles.login_input}
-                  {...registerSignup("correo")}
-                />
-                <label className={styles.login_label}>Correo</label>
-                <div className={styles.underline}></div>
-              </div>
-              <div className={styles.input_container}>
+                <h2>Regístrate</h2>
                 <div className={styles.login_inputContainer}>
                   <input
                     className={styles.login_input}
-                    type={show ? "password" : "text"}
-                    {...registerSignup("contrasena")}
+                    {...registerSignup("usuario")}
+                    required
                   />
-                  <label className={styles.login_label}>Contraseña</label>
+                  <label className={styles.login_label}>Usuario</label>
                   <div className={styles.underline}></div>
                 </div>
-                <button
-                  className={`${styles.login_showpass} material-icons`}
-                  type="button"
-                  onClick={toShowPass}
-                >
-                  {show ? "visibility" : "visibility_off"}
-                </button>
-              </div>
-              <div className={styles.input_container}>
                 <div
                   className={styles.login_inputContainer}
                   style={{ margin: "0" }}
                 >
                   <input
                     className={styles.login_input}
-                    type={show ? "password" : "text"}
-                    {...registerSignup("contrasena2")}
+                    required
+                    {...registerSignup("correo")}
                   />
-                  <label className={styles.login_label}>
-                    Confirmar Contraseña
-                  </label>
+                  <label className={styles.login_label}>Correo</label>
                   <div className={styles.underline}></div>
                 </div>
-              </div>
+                <div className={styles.input_container}>
+                  <div className={styles.login_inputContainer}>
+                    <input
+                      className={styles.login_input}
+                      required
+                      type={show ? "password" : "text"}
+                      {...registerSignup("contrasena")}
+                    />
+                    <label className={styles.login_label}>Contraseña</label>
+                    <div className={styles.underline}></div>
+                  </div>
+                  <button
+                    className={`${styles.login_showpass} material-icons`}
+                    type="button"
+                    onClick={toShowPass}
+                  >
+                    {show ? "visibility" : "visibility_off"}
+                  </button>
+                </div>
+                <div className={styles.input_container}>
+                  <div
+                    className={styles.login_inputContainer}
+                    style={{ margin: "0" }}
+                  >
+                    <input
+                      className={styles.login_input}
+                      type={show ? "password" : "text"}
+                      required
+                      {...registerSignup("contrasena2")}
+                    />
+                    <label className={styles.login_label}>
+                      Confirmar Contraseña
+                    </label>
+                    <div className={styles.underline}></div>
+                  </div>
+                </div>
 
-              <button
-                type="submit"
-                className={styles.login_button}
-                style={{ marginTop: "30px" }}
-              >
-                <font size="5">R e g i s t r a r</font>
-              </button>
-              <br />
-              <br />
+                <button
+                  type="submit"
+                  className={styles.login_button}
+                  style={{ marginTop: "30px" }}
+                >
+                  <font size="5">R e g i s t r a r</font>
+                </button>
+                <br />
+                <br />
 
-              <button className={styles.login_btn_options} onClick={toSignUp}>
-                O inicia sesión
-              </button>
-              <br />
-              <p className={styles.errors}>{errorsSignup.usuario?.message}</p>
-              <p className={styles.errors}>{errorsSignup.correo?.message}</p>
-              <p className={styles.errors}>
-                {errorsSignup.contrasena?.message}
-              </p>
-              <p className={styles.errors}>
-                {errorsSignup.contrasena2?.message}
-              </p>
-            </form>
+                <br />
+                <p className={styles.errors}>{errorsSignup.usuario?.message}</p>
+                <p className={styles.errors}>{errorsSignup.correo?.message}</p>
+                <p className={styles.errors}>
+                  {errorsSignup.contrasena?.message}
+                </p>
+                <p className={styles.errors}>
+                  {errorsSignup.contrasena2?.message}
+                </p>
+              </form>
+              <center>
+                <button className={styles.login_btn_options} onClick={toSignUp}>
+                  O inicia sesión
+                </button>
+              </center>
+            </>
           )}
         </div>
       </div>

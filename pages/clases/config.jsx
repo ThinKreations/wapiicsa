@@ -4,34 +4,50 @@ import MainHead from "@/components/MainHead";
 import Header from "@/components/Header";
 import { useState } from "react";
 import { camPassword } from "../api/profesor-http";
+import { schemaChange } from "@/schemas/cambiarContrasena";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Swal from "sweetalert2";
+import Router, { useRouter } from "next/router";
 
 export default function Settings() {
 
-    let user_profesor = "axel";
+    const router = useRouter()
 
-    const [email, setEmail] = useState("")
-    const [pass1, setPass1] = useState("")
-    const [pass2, setPass2] = useState("")
-    const [pass3, setPass3] = useState("")
-
-    const [show1, setShow1] = useState(true);
     const [show2, setShow2] = useState(true);
     const [show3, setShow3] = useState(true);
 
-    const cambiarPassword = async (e) => {
-        e.preventDefault();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(schemaChange),
+    });
+
+
+
+    const cambiarPassword = async (data) => {
+        console.log(data)
         try {
-            if (pass2 !== pass3) {
-                console.warn("Las contraseñas no son iguales")
+            if (data.contrasena !== data.contrasena2) {
+                Swal.fire({
+                    icon: "error",
+                    text: "Las contraseñas deben coincidir",
+                    timer: 2400,
+                })
             }
-            /*const res = await camPassword({
-                username: user_profesor,
-                correo: email,
-                passActual: pass1,
-                passNueva: pass2
+            const res = await camPassword({
+                correo: data.correo,
+                passNueva: data.contrasena2
             });
-            console.log(res);
-            setLogin(true);*/
+            console.log(res)
+            Swal.fire({
+                icon: "success",
+                text: "Su contraseña ha cambiado.",
+                timer: 1200,
+            })
+            router.push('/clases')
         } catch (error) {
             console.log(error);
         }
@@ -49,7 +65,7 @@ export default function Settings() {
     return (
         <>
             <MainHead title={'Configuración'} />
-            <Header user_profesor={user_profesor} />
+            <Header />
 
             <div className={styles.dash_container}>
                 <div className={styles.dash_ctrl}>
@@ -60,26 +76,13 @@ export default function Settings() {
             </div>
 
             <center>
-                <form className={styles.config_form} onSubmit={cambiarPassword}>
+                <form className={styles.config_form} onSubmit={handleSubmit(cambiarPassword)}>
                     <div
                         className={styles2.login_inputContainer}
                     >
                         <input
                             className={styles2.login_input}
-                            value={user_profesor}
-                            required
-                        />
-                        <label className={styles2.login_label}>Contraseña</label>
-                        <div className={styles2.underline}></div>
-                    </div>
-
-                    <div
-                        className={styles2.login_inputContainer}
-                    >
-                        <input
-                            className={styles2.login_input}
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            {...register('correo')}
                             required
                         />
                         <label className={styles2.login_label}>Correo</label>
@@ -92,31 +95,7 @@ export default function Settings() {
                         >
                             <input
                                 className={styles2.login_input}
-                                value={pass1}
-                                onChange={(e) => setPass1(e.target.value)}
-                                type={show1 ? "password" : "text"}
-                                required
-                            />
-                            <label className={styles2.login_label}>Contraseña Actual</label>
-                            <div className={styles2.underline}></div>
-                        </div>
-                        <button
-                            className={`${styles2.login_showpass} material-icons`}
-                            type="button"
-                            onClick={showPass1}
-                        >
-                            {show1 ? "visibility" : "visibility_off"}
-                        </button>
-                    </div>
-
-                    <div className={styles2.input_container}>
-                        <div
-                            className={styles2.login_inputContainer}
-                        >
-                            <input
-                                className={styles2.login_input}
-                                value={pass2}
-                                onChange={(e) => setPass2(e.target.value)}
+                                {...register('contrasena')}
                                 type={show2 ? "password" : "text"}
                                 required
                             />
@@ -138,8 +117,7 @@ export default function Settings() {
                         >
                             <input
                                 className={styles2.login_input}
-                                value={pass3}
-                                onChange={(e) => setPass3(e.target.value)}
+                                {...register('contrasena2')}
                                 type={show3 ? "password" : "text"}
                                 required
                             />

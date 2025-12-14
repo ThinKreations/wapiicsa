@@ -151,8 +151,10 @@
         flex-direction: column-reverse;
     }
     .header_select{
-        min-width: fit-content;
-        width: fit-content;
+        min-width: 75vw;
+    }
+    .header_select option{
+        width: 70vw;
     }
     .dash_card{
         width: 100%;

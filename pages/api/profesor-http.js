@@ -120,19 +120,19 @@ export async function recPassword({ username, correo }) {
   }
 }
 
-export async function camPassword({ username, correo, passActual, passNueva }) {
+export async function camPassword({ correo, passNueva }) {
   try {
-    const res = await fetch("", {
+    const res = await fetch(`${API_URL}/cambiar-password`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        user_profesor: username,
         correo: correo,
-        passActual: passActual,
-        passNueva: passNueva,
+        contrasena: passNueva,
       }),
+      credentials: "include",
     });
     const resJSON = await res.json();
+    console.log(resJSON);
     if (!res.ok) {
       throw new Error(resJSON.message);
     }
