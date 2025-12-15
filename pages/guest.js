@@ -24,7 +24,7 @@ export default function guest() {
       const res = await logIn({
         id: data.id,
       });
-      console.log(res);
+      router.push(`/clases/${res}`);
     } catch (e) {
       console.log(e);
     }

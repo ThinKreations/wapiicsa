@@ -164,8 +164,16 @@ export async function getServerSideProps({ req }) {
       }
     }
   }
-
   const resJSON = await res.json();
+  console.log(resJSON.message)
+  if (res.status === 403) {
+    return {
+      redirect: {
+        destination: "/clases/" + resJSON.message,
+        permanent: false,
+      }
+    }
+  }
   return {
     props: {
       clases: resJSON.data || [],

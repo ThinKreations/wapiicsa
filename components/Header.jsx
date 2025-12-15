@@ -5,13 +5,32 @@ import logo from "@/src/logo.png"
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { logOut } from "@/pages/api/profesor-http";
+import Swal from "sweetalert2";
+import { resolve } from "styled-jsx/css";
 
 export default function Header(props) {
     const router = useRouter();
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+
 
     const logout = async () => {
-        logOut();
-        router.push('/');
+        try {
+            logOut();
+            Swal.fire({
+                icon: 'success',
+                title: '¡Vuelva pronto!',
+                showConfirmButton: false,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timer: 2200,
+            })
+        } catch (e) {
+            console.error(e);
+        } finally {
+            await sleep(2500)
+            router.push('/');
+
+        }
     }
 
     const clases = props.clases || [];

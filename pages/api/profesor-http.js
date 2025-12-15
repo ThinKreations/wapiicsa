@@ -100,9 +100,24 @@ export async function logOut() {
   }
 }
 
+export async function verDatos() {
+  try {
+    const res = await fetch(`${API_URL}/cambiar-contrasena`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+    const resJSON = await res.json();
+    console.log(resJSON);
+    return { resJSON };
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 export async function recPassword({ username, correo }) {
   try {
-    const res = await fetch("", {
+    const res = await fetch(`${API_URL}/recuperar-cuenta`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -114,6 +129,13 @@ export async function recPassword({ username, correo }) {
     if (!res.ok) {
       throw new Error(resJSON.message);
     }
+    Swal.fire({
+      icon: "success",
+      title: "Correo enviado",
+      text: "No olvides revisar SPAM",
+      timer: 2500,
+    });
+    console.log(res, resJSON);
     return resJSON;
   } catch (error) {
     console.error("Error al recuperar:", error);

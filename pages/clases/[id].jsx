@@ -9,6 +9,7 @@ import scrap from "../api/html-http";
 import { nuevo } from "../api/invitado-http";
 import { getAsistencias, postAsistencia, putAsistencia } from "../api/asistencia-http";
 import Swal from "sweetalert2";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function Clase({ clases, id }) {
     const router = useRouter()
@@ -23,7 +24,6 @@ export default function Clase({ clases, id }) {
 
     const subirAsistencia = async (id, boleta) => {
         if (boletasEscaneadas.includes(boleta)) {
-            console.log('xd')
         }
         try {
             const res = await postAsistencia({
@@ -48,7 +48,6 @@ export default function Clase({ clases, id }) {
     }
 
     const modAsistencia = async (id, boleta, fecha, aof) => {
-        console.log(boletasEscaneadas)
         setBoletasEscaneadas(prev => {
             if (prev.includes(boleta)) {
                 return prev.filter(b => b !== boleta);
@@ -56,7 +55,6 @@ export default function Clase({ clases, id }) {
                 return [...prev, boleta];
             }
         });
-        console.log(boletasEscaneadas)
         try {
             const res = await putAsistencia({
                 id: id,
@@ -64,7 +62,6 @@ export default function Clase({ clases, id }) {
                 fecha: fecha,
                 aof: aof
             });
-
             setAct(!act)
         } catch (e) {
             console.error(e)
@@ -241,10 +238,27 @@ export async function getServerSideProps(context) {
             }
         }
     }
-    const resJSON = await res.json();
 
+    const resJSON = await res.json();
     const clases = await resJSON.data;
 
+    const resxd = await fetch(`${API_URL}/clases/${query.id}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Cookie": req.headers.cookie || "",
+        },
+    })
+
+    if (resxd.status === 403 || resxd.status === 404) {
+        return {
+            redirect: {
+                destination: "/clases",
+                permanent: false,
+            }
+        }
+    }
 
     return {
         props: {

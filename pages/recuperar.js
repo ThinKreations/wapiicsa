@@ -5,8 +5,10 @@ import styles from "@/styles/Home.module.css";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
 import { recPassword } from "./api/profesor-http";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schemaRecover } from "@/schemas/recover";
 
 export default function Recuperar() {
   const router = useRouter();
@@ -19,18 +21,23 @@ export default function Recuperar() {
     setShow(!show);
   }
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schemaRecover),
+  });
+
   useEffect(() => {});
 
-  const recuperar = async (e) => {
-    e.preventDefault();
-
+  const recuperar = async (data) => {
     try {
       const res = await recPassword({
-        username: user,
-        correo: email,
+        username: data.user_profesor,
+        correo: data.correo,
       });
       console.log(res);
-      setLogin(true);
     } catch (error) {
       console.log(error);
     }
@@ -55,14 +62,13 @@ export default function Recuperar() {
           <form
             key="recuperar"
             className={styles.login_form}
-            onSubmit={recuperar}
+            onSubmit={handleSubmit(recuperar)}
           >
             <h2>Recuperar contraseña</h2>
             <div className={styles.login_inputContainer}>
               <input
                 className={styles.login_input}
-                value={user}
-                onChange={(e) => setUser(e.target.value)}
+                {...register("user_profesor")}
                 type="text"
                 required
               />
@@ -72,34 +78,52 @@ export default function Recuperar() {
             <div className={styles.login_inputContainer}>
               <input
                 className={styles.login_input}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                {...register("correo")}
                 type="text"
                 required
               />
               <label className={styles.login_label}>Correo</label>
               <div className={styles.underline}></div>
             </div>
-            <button
-              className={styles.login_button}
-              type="submit"
-              onClick={() => {
-                router.push("/");
-              }}
-            >
+            <button className={styles.login_button} type="submit">
               <font size="5">R e c u p e r a r</font>
             </button>
             <br />
             <br />
+            <p className={styles.errors}>{errors.correo}</p>
+          </form>
+          <center>
             <button
               className={styles.login_btn_options}
               onClick={() => router.push("/")}
             >
               Volver a inicio
             </button>
-          </form>
+          </center>
+          <br />
+          <br />
         </div>
       </div>
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { req } = context;
+  if (!req.headers.cookie) {
+    console.log(req.headers);
+  } else {
+    console.log(req.headers);
+    console.log("xd");
+    return {
+      redirect: {
+        destination: "/clases",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 }

@@ -2,7 +2,6 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 import Swal from "sweetalert2";
 
 export async function nuevo({ id }) {
-  console.log(id);
   try {
     const res = await fetch(`${API_URL}/nuevo-invitado/${id}`, {
       method: "POST",
@@ -10,6 +9,8 @@ export async function nuevo({ id }) {
       credentials: "include",
     });
     const resJSON = await res.json();
+    if (res.status === 403) {
+    }
     if (!res.ok) {
       Swal.fire({
         icon: "error",
@@ -17,7 +18,6 @@ export async function nuevo({ id }) {
         timer: 1000,
       });
     }
-
     return { resJSON, res };
   } catch (e) {
     console.error(e);
@@ -29,12 +29,14 @@ export async function logIn({ id }) {
     const res = await fetch(`${API_URL}/invitado/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      credentials: "include",
       body: JSON.stringify({
         id_invitado: parseInt(id),
       }),
+      credentials: "include",
     });
     const resJSON = await res.json();
+    console.log(res, resJSON);
+    const clase = resJSON.clase;
     if (res.status === 401) {
       Swal.fire({
         icon: "error",
@@ -43,8 +45,9 @@ export async function logIn({ id }) {
       });
       return { res, resJSON };
     }
-    return { res, resJSON };
+    return clase;
   } catch (error) {
+    console.log(error);
     Swal.fire({
       icon: "error",
       title: `Error`,

@@ -265,3 +265,23 @@ export default function Home() {
     </>
   );
 }
+
+export async function getServerSideProps(context) {
+  const { req } = context;
+  if (!req.headers.cookie) {
+    console.log(req.headers);
+  } else {
+    console.log(req.headers);
+    console.log("xd");
+    return {
+      redirect: {
+        destination: "/clases",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+}

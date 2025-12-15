@@ -1,5 +1,6 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 import Swal from "sweetalert2";
+import { logIn } from "./invitado-http";
 
 export async function getAsistencias(id) {
   try {
@@ -12,6 +13,19 @@ export async function getAsistencias(id) {
       credentials: "include",
     });
     const resJSON = await res.json();
+    if (res.status === 403) {
+      /*Swal.fire({
+        title: "Clase inaccesible",
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        html: `
+          <button onclick="window.history.back()" styles="border:none, background-color:transparent">V o l v e r</button>
+        `,
+        showConfirmButton: false,
+        imageUrl:
+          "https://th.bing.com/th/id/OIP.UaHuNAasoL0awY6isNE-UwAAAA?o=7&cb=ucfimg2&rm=3&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3",
+      });*/
+    }
     const clase = resJSON.clase;
     const alumnos = resJSON.alumnos;
     const asistencias = resJSON.asistencias;
