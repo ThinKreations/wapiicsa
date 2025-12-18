@@ -9,18 +9,21 @@ export async function nuevo({ id }) {
       credentials: "include",
     });
     const resJSON = await res.json();
-    if (res.status === 403) {
-    }
-    if (!res.ok) {
+    if (res.status !== 200) {
       Swal.fire({
         icon: "error",
         title: "Error al generar invitado.",
         timer: 1000,
       });
     }
-    return { resJSON, res };
+    return { resJSON };
   } catch (e) {
-    console.error(e);
+    Swal.fire({
+      icon: "error",
+      title: "No fue posible generar invitado.",
+      timer: 1000,
+    });
+    0;
   }
 }
 

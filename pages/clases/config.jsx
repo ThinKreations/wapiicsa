@@ -151,13 +151,22 @@ export default function Settings({ profesor, clases }) {
                     </div>
 
                     <br />
-
-                    <input
-                        id="guardar"
-                        type="submit"
-                        value="Guardar contraseña"
-                        className={styles2.login_button}
-                    />
+                    <div className={styles.btnContainer1}>
+                        <input
+                            type="button"
+                            value="Cancelar"
+                            className={styles2.login_button}
+                            onClick={() => router.push('/clases')}
+                            style={{ margin: '10px' }}
+                        />
+                        <input
+                            id="guardar"
+                            type="submit"
+                            value="Guardar contraseña"
+                            style={{ margin: '10px' }}
+                            className={styles2.login_button}
+                        />
+                    </div>
                 </form>
             </center>
         </>

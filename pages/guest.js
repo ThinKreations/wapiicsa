@@ -56,7 +56,7 @@ export default function guest() {
             <div className={styles.login_inputContainer}>
               <input
                 className={styles.login_input}
-                type="text"
+                type="number"
                 {...register("id")}
                 required
               />

@@ -181,6 +181,7 @@ export default function Clase({ clases, id }) {
                                     const boletaExiste = alumnos.some(
                                         (alumno) => String(alumno.boleta).trim() === boleta
                                     )
+
                                     if (boletasEscaneadas.includes(boleta)) {
                                         Swal.fire({
                                             icon: 'error',

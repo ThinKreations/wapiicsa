@@ -112,7 +112,9 @@ export default function Home() {
                   type="text"
                   required
                 />
-                <label className={styles.login_label}>Usuario</label>
+                <label className={styles.login_label}>
+                  Usuario (No correo)
+                </label>
                 <div className={styles.underline}></div>
               </div>
               <div className={styles.input_container}>

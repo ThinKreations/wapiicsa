@@ -126,8 +126,17 @@ export async function recPassword({ username, correo }) {
       }),
     });
     const resJSON = await res.json();
-    if (!res.ok) {
-      throw new Error(resJSON.message);
+    console.log(res, resJSON);
+
+    if (res.status === 404) {
+      Swal.fire({
+        icon: "error",
+        title: "404",
+        text: "Profesor no encontrado",
+        showConfirmButton: false,
+        timer: 2500,
+      });
+      return;
     }
     Swal.fire({
       icon: "success",
